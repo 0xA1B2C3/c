@@ -9,7 +9,7 @@ static int len;
 
 void logo() {
 	printf("###   Wifi Key Extractor   ###\n");
-	printf("###   Written by: 0xA1B2C3 ###\n");
+	printf("###   Written by: Luke Jacobs ###\n");
 }
 
 char *Spacify(char *str) {
@@ -73,17 +73,21 @@ char *Retrieve(char *str, char *start, char *end) {
 	out[strlen(out)-strlen(pEnd)] = 0; 
 	return out;
 }
+
 int  Extract(char *xmlDoc) {
 	//Look for SSIDS
 	char *ssid; ssid = Retrieve(xmlDoc, "<name>", "</name>");
 	printf("\n[+] SSID: %s");
+
 	//Look for keys
 	char *key; key = Retrieve(xmlDoc, "<keyMaterial>", "</keyMaterial>");
 	printf("\n| KEY: %s\n", key);
+	
 	//Decrypt
 	printf("| DECRYPTED: %s\n", Decrypt(Spacify(key)));
 	return 1;
 }
+
 void Analyze(char *FileName) {
 	char *InputBuffer; InputBuffer = (char *) calloc(5000, 1);
 	FILE *fp;
@@ -96,6 +100,7 @@ void Analyze(char *FileName) {
 	Extract(InputBuffer);
 	return;
 }
+
 void Search(char *Directory) {
 	char *FullDir; FullDir = (char *) calloc(MAX_PATH, 1);
 	WIN32_FIND_DATA FindFileData3;
